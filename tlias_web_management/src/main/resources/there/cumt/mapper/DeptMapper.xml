@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="there.cumt.mapper.DeptMapper">
+    <insert id="insert">
+        insert into dept(name,
+                         create_time,
+                         update_time)
+        VALUES (#{name},
+                #{createTime},
+                #{updateTime})
+    </insert>
+
+    <update id="updateId">
+        update dept
+        SET dept.name = #{name},
+        dept.create_Time = #{createTime},
+        dept.update_time = #{updateTime},
+        dept.id = #{id}
+        WHERE dept.id = #{id};
+    </update>
+
+    <delete id="deleteById">
+        delete from dept
+               where id = #{id}
+    </delete>
+
+    <select id="list" resultType="there.cumt.pojo.Dept">
+        select * from dept
+    </select>
+
+    <select id="selectId" resultType="there.cumt.pojo.Dept">
+        select * from dept where id = #{id}
+    </select>
+
+</mapper>
