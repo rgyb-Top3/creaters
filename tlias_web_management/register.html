@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 400px;
+            box-sizing: border-box;
+        }
+        .container h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .form-group input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .form-group input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .form-group .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777;
+        }
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2> 注册页面</h2>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="firstName">姓名</label>
+            <input type="text" id="firstName" name="firstName" required>
+            <div class="error" id="firstNameError"></div>
+        </div>
+        <div class="form-group">
+            <label for="lastName">姓氏</label>
+            <input type="text" id="lastName" name="lastName" required>
+            <div class="error" id="lastNameError"></div>
+        </div>
+        <div class="form-group">
+            <label for="email">电子邮件</label>
+            <input type="email" id="email" name="email" required>
+            <div class="error" id="emailError"></div>
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password" required>
+            <div class="error" id="passwordError"></div>
+        </div>
+        <div class="form-group">
+            <label for="confirmPassword">确认密码</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <div class="error" id="confirmPasswordError"></div>
+        </div>
+        <div class="form-group">
+            <label for="department">部门</label>
+            <select id="department" name="department" required>
+                <option value="">请选择部门</option>
+                <option value="hr">人力资源部</option>
+                <option value="finance">财务部</option>
+                <option value="it">信息技术部</option>
+                <option value="sales">销售部</option>
+            </select>
+            <div class="error" id="departmentError"></div>
+        <div class="form-group">
+            <input type="submit" value="注册">
+        </div>
+        </div>
+    </form>
+    <div class="footer">
+        已经有账号了？<a href="login.html">登录</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const errorElements = document.querySelectorAll('.error');
+        errorElements.forEach(element => {
+            element.textContent = '';
+        });
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName = document.getElementById('lastName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+        const department = document.getElementById('department').value.trim();
+
+        let isValid = true;
+
+        if (!firstName || !lastName) {
+            document.getElementById('firstNameError').textContent = '姓名不能为空';
+            document.getElementById('lastNameError').textContent = '姓氏不能为空';
+            isValid = false;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            document.getElementById('emailError').textContent = '请输入有效的电子邮件地址';
+            isValid = false;
+        }
+
+        if (password.length < 6) {
+            document.getElementById('passwordError').textContent = '密码长度不能少于6个字符';
+            isValid = false;
+        }
+
+        if (password !== confirmPassword) {
+            document.getElementById('confirmPasswordError').textContent = '两次输入的密码不一致';
+            isValid = false;
+        }
+
+        if (!department) {
+            document.getElementById('departmentError').textContent = '请选择部门';
+            isValid = false;
+        }
+        if (isValid) {
+            alert('注册成功！');
+        }
+    });
+</script>
+</body>
+</html>
