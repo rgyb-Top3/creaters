@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生管理系统</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    button {
+        padding: 10px;
+        background-color: #5cb85c;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #4cae4c;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+</style>
+<script>
+    document.getElementById('studentForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+        const grade = document.getElementById('grade').value;
+
+        addStudent(name, age, grade);
+
+        // 清空输入框
+        document.getElementById('studentForm').reset();
+    });
+
+    function addStudent(name, age, grade) {
+        const studentList = document.getElementById('studentList');
+
+        const newRow = document.createElement('tr');
+
+        newRow.innerHTML = `
+        <td>${name}</td>
+        <td>${age}</td>
+        <td>${grade}</td>
+    `;
+
+        studentList.appendChild(newRow);
+    }
+
+</script>
+<body>
+<div class="container">
+    <h1>学生管理系统</h1>
+    <form id="studentForm">
+        <input type="text" id="name" placeholder="姓名" required>
+        <input type="text" id="age" placeholder="年龄" required>
+        <input type="text" id="grade" placeholder="年级" required>
+        <button type="submit">添加学生</button>
+    </form>
+    <h2>学生列表</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>年级</th>
+        </tr>
+        </thead>
+        <tbody id="studentList">
+        <!-- 学生信息将显示在这里 -->
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
