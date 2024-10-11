@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)file:///C:/Users/15519586229/Desktop/login.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>员工管理系统</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        .edit-buttons {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>员工管理系统</h1>
+
+        <!-- 搜索框 -->
+        <input type="text" id="search" placeholder="搜索员工">
+
+        <!-- 员工列表 -->
+        <ul id="employee-list"><li>Alice - Developer
+                           <button onclick="editEmployee(1)">编辑</button>
+                           <button onclick="deleteEmployee(1)">删除</button></li><li>Bob - Manager
+                           <button onclick="editEmployee(2)">编辑</button>
+                           <button onclick="deleteEmployee(2)">删除</button></li><li>马苏洋 - 学习委员
+                           <button onclick="editEmployee(3)">编辑</button>
+                           <button onclick="deleteEmployee(3)">删除</button></li></ul>
+
+        <h2>添加新员工</h2>
+
+        <!-- 添加员工表单 -->
+        <input type="text" id="new-name" placeholder="员工姓名">
+        <input type="text" id="new-role" placeholder="员工职位">
+        <button onclick="addEmployee()">添加员工</button>
+    </div>
+
+    <script>
+        // 初始员工数据
+        let employees = [
+            { id: 1, name: 'Alice', role: 'Developer' },
+            { id: 2, name: 'Bob', role: 'Manager' }
+        ];
+        let editEmployeeId = null;
+
+        // 显示员工列表
+        function displayEmployees() {
+            const employeeList = document.getElementById('employee-list');
+            employeeList.innerHTML = '';
+            const searchQuery = document.getElementById('search').value.toLowerCase();
+
+            employees.filter(emp => emp.name.toLowerCase().includes(searchQuery)).forEach(employee => {
+                const li = document.createElement('li');
+                li.innerHTML = editEmployeeId === employee.id
+                    ? `<input type="text" value="${employee.name}" id="edit-name-${employee.id}">
+                           <input type="text" value="${employee.role}" id="edit-role-${employee.id}">
+                           <button onclick="saveEdit(${employee.id})">保存</button>
+                           <button onclick="cancelEdit()">取消</button>`
+                    : `${employee.name} - ${employee.role}
+                           <button onclick="editEmployee(${employee.id})">编辑</button>
+                           <button onclick="deleteEmployee(${employee.id})">删除</button>`;
+                employeeList.appendChild(li);
+            });
+        }
+
+        // 添加新员工
+        function addEmployee() {
+            const name = document.getElementById('new-name').value;
+            const role = document.getElementById('new-role').value;
+            if (name && role) {
+                employees.push({
+                    id: employees.length + 1,
+                    name: name,
+                    role: role
+                });
+                document.getElementById('new-name').value = '';
+                document.getElementById('new-role').value = '';
+                displayEmployees();
+            } else {
+                alert('请填写完整的员工信息');
+            }
+        }
+
+        // 删除员工
+        function deleteEmployee(id) {
+            employees = employees.filter(employee => employee.id !== id);
+            displayEmployees();
+        }
+
+        // 编辑员工
+        function editEmployee(id) {
+            editEmployeeId = id;
+            displayEmployees();
+        }
+
+        // 取消编辑
+        function cancelEdit() {
+            editEmployeeId = null;
+            displayEmployees();
+        }
+
+        // 保存编辑后的员工信息
+        function saveEdit(id) {
+            const name = document.getElementById(`edit-name-${id}`).value;
+            const role = document.getElementById(`edit-role-${id}`).value;
+            employees = employees.map(employee =>
+                employee.id === id ? { ...employee, name: name, role: role } : employee
+            );
+            editEmployeeId = null;
+            displayEmployees();
+        }
+
+        // 搜索功能
+        document.getElementById('search').addEventListener('input', displayEmployees);
+
+        // 初始化显示员工列表
+        displayEmployees();
+    </script>
+
+
+</body></html>
