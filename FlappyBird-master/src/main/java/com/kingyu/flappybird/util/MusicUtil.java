@@ -6,6 +6,9 @@ import java.io.InputStream;
 
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
+import javax.sound.sampled.*;  
+import java.io.File;  
+import java.io.IOException;
 
 /**
  * 音乐工具类
@@ -21,32 +24,41 @@ public class MusicUtil {
 
     // wav播放
     public static void playFly() {
-        try {
-            // create an AudioStream from the InputStream
-            InputStream flyIn = new FileInputStream("resources/wav/fly.wav");
-            fly = new AudioStream(flyIn);
-        } catch (IOException ignored) {
+        loadClip("resources/wav/fly.wav", fly);  
+        if (fly != null) {  
+            fly.start();  
         }
-        AudioPlayer.player.start(fly);
     }
 
     public static void playCrash() {
-        try {
-            // create an AudioStream from the InputStream
-            InputStream crashIn = new FileInputStream("resources/wav/crash.wav");
-            crash = new AudioStream(crashIn);
-        } catch (IOException ignored) {
+        loadClip("resources/wav/crash.wav", crash);  
+        if (crash != null) {  
+            crash.start();  
         }
-        AudioPlayer.player.start(crash);
     }
 
     public static void playScore() {
-        try {
-            // create an AudioStream from the InputStream
-            InputStream scoreIn = new FileInputStream("resources/wav/score.wav");
-            score = new AudioStream(scoreIn);
-        } catch (IOException ignored) {
+        loadClip("resources/wav/score.wav", score);  
+        if (score != null) {  
+            score.start();  
         }
-        AudioPlayer.player.start(score);
+        private static void loadClip(String filePath, Clip clip) {  
+        try {  
+            File audioFile = new File(filePath);  
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);  
+            AudioFormat format = audioStream.getFormat();  
+            DataLine.Info info = new DataLine.Info(Clip.class, format);  
+ 
+            if (!AudioSystem.isLineSupported(info)) {  
+                System.out.println("Line not supported");  
+                System.exit(0);  
+            }  
+ 
+            clip = (Clip) AudioSystem.getLine(info);  
+            clip.open(audioStream);  
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {  
+            e.printStackTrace();  
+        }
     }
+
 }
