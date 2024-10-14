@@ -41,6 +41,11 @@ public class Cloud {
         if (bird.isDead())
             speed = 1;
         x -= speed;
+        if (x < -scaleImageWidth) {  
+            // 云朵飞出屏幕时重生  
+            x = SCREEN_WIDTH + scaleImageWidth;  
+            y = MIN_CLOUD_Y + random.nextInt(MAX_CLOUD_Y - MIN_CLOUD_Y);  //y为随机数值（使得云可以随机位置重生，增加趣味性）
+        }
         g.drawImage(img, x, y, scaleImageWidth, scaleImageHeight, null);
     }
 
