@@ -14,9 +14,9 @@ import java.io.File;
  */
 public class MusicUtil {
 
-    private static AudioStream fly;
-    private static AudioStream crash;
-    private static AudioStream score;
+    private static clip fly;
+    private static clip crash;
+    private static clip score;
 
     // wav播放
     public static void playFly() {
