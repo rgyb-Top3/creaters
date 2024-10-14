@@ -3,12 +3,8 @@ package com.kingyu.flappybird.util;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import sun.audio.AudioPlayer;
-import sun.audio.AudioStream;
 import javax.sound.sampled.*;  
 import java.io.File;  
-import java.io.IOException;
 
 /**
  * 音乐工具类
