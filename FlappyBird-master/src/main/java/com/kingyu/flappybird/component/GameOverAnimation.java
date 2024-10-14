@@ -53,6 +53,14 @@ public class GameOverAnimation {
             x -= GameUtil.getStringWidth(Constant.SCORE_FONT, str) >> 1;
             g.drawString(str, x, y);
         }
+        // 绘制“恭喜你完成游戏”提示  
+        String congratulationMessage = "恭喜你完成游戏";  
+        FontMessageFont = new Font("Serif", Font.BOLD, 24); // 可以根据需要调整字体样式和大小  
+        g.setFont(MessageFont);  
+        FontMetrics fm = g.getFontMetrics(MessageFont);  
+        int messageX = (Constant.FRAME_WIDTH - fm.stringWidth(congratulationMessage)) / 2;  
+        int messageY = Constant.FRAME_HEIGHT / 2 + fm.getHeight() / 4; // 调整Y坐标使文本居中  
+        g.drawString(congratulationMessage, messageX, messageY);
 
         // 绘制继续游戏，图像闪烁
         final int COUNT = 30; // 闪烁周期
