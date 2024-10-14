@@ -31,11 +31,11 @@ public class LoginController {
             claims.put("username", e.getUsername());
 
             String jwt = JwtUtils.generateJwt(claims); //jwt包含了当前登录的员工信息
-            return Result.success(jwt);
+            return Result.success().message("登录成功").data("token",jwt);
         }
 
         //登录失败, 返回错误信息
-        return Result.error("用户名或密码错误");
+        return Result.error().message("登录失败");
     }
 
 }
