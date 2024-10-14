@@ -27,7 +27,7 @@ public class EmpController {
                        @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end){
         log.info("分页查询，page表示页数，pageSize表示页记录数");
         PageBean pageBean = empService.page(page,pageSize,name, gender, begin, end);
-        return Result.success(pageBean);
+        return Result.success().message("查询成功").data("员工信息",pageBean);
     }
 
     @DeleteMapping("/emps/{ids}")
@@ -48,7 +48,7 @@ public class EmpController {
     public Result getById(@PathVariable Integer id){
         log.info("根据ID查询员工信息, id: {}",id);
         Emp emp = empService.getById(id);
-        return Result.success(emp);
+        return Result.success().message("查询成功").data("员工信息",emp);
     }
 
     @PutMapping("/emps")
