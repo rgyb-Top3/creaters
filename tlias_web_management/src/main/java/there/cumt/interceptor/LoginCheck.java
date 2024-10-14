@@ -33,7 +33,7 @@ public class LoginCheck implements HandlerInterceptor {
         //4.判断令牌是否存在，如果不存在，返回错误结果（未登录）。
         if(!StringUtils.hasLength(jwt)){
             log.info("请求头token为空,返回未登录的信息");
-            Result error = Result.error("NOT_LOGIN");
+            Result error = Result.error().message("NOT_LOGIN");
             //手动转换 对象--json --------> 阿里巴巴fastJSON
             String notLogin = JSONObject.toJSONString(error);
             resp.getWriter().write(notLogin);
@@ -46,7 +46,7 @@ public class LoginCheck implements HandlerInterceptor {
         } catch (Exception e) {//jwt解析失败
             e.printStackTrace();
             log.info("解析令牌失败, 返回未登录错误信息");
-            Result error = Result.error("NOT_LOGIN");
+            Result error = Result.error().message("NOT_LOGIN");
             //手动转换 对象--json --------> 阿里巴巴fastJSON
             String notLogin = JSONObject.toJSONString(error);
             resp.getWriter().write(notLogin);
