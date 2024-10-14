@@ -21,7 +21,7 @@ public class DeptController {
     public Result list(){
         log.info("查询全部部门数据");
         List<Dept> deptList = deptService.list();
-        return Result.success(deptList);
+        return Result.success().message("查询成功").data("部门信息",deptList);
     }
 
     @DeleteMapping("/depts/{id}")
@@ -42,7 +42,7 @@ public class DeptController {
     public Result selectOne(@PathVariable Integer id){
         log.info("根据ID{}查询部门",id);
         Dept dept=deptService.selectById(id);
-        return Result.success(dept);
+        return Result.success().message("查询成功").data("部门信息",dept);
     }
 
     @PutMapping("/depts")
