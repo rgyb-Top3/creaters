@@ -20,6 +20,15 @@ public class LoginCheckFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
+        String clientIp = req.getRemoteAddr();
+
+        // 速率限制检查
+        if (!rateLimiterService.isRequestAllowed(clientIp)) {
+            log.warn("IP {} 超过了请求限制，拒绝访问", clientIp);
+            sendErrorResponse(resp, "TOO_MANY_REQUESTS");
+            return;
+        }
+        
         //1.获取请求url。
         String url = req.getRequestURL().toString();
         log.info("请求的url: {}",url);
