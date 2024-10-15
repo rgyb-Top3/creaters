@@ -64,6 +64,7 @@
     </div>  
   
     <script>  
+        const apiUrl = 'http://localhost:8080/login';
         document.getElementById('loginForm').addEventListener('submit', function(event) {  
             event.preventDefault(); // 阻止表单的默认提交行为  
   
@@ -71,19 +72,37 @@
             const username = document.getElementById('username').value;  
             const password = document.getElementById('password').value;  
   
-            //  
-  
-            // 假设用户名是 'admin' 且密码是 'password'  
-            const validUsername = 'admin';  
-            const validPassword = 'password123';  
-  
-            if (username === validUsername && password === validPassword) {  
-                alert('Login successful!');  
-                  
-            } else {  
-                // 显示错误消息  
+            const loginData = { username, password };// 创建要发送的数据对象
+            const jsonData = JSON.stringify(loginData);
+            
+            fetch(apiUrl, {  
+                method: 'POST',  
+                headers: {  
+                    'Content-Type': 'application/json'  
+                },  
+                body: jsonData  
+            })  
+            .then(response => {  
+                if (!response.ok) {  
+                    throw new Error('Network response was not ok');  
+                }  
+                return response.json();  
+            })  
+            .then(data => {  
+                if (data.success) {  
+                    alert('Login successful!');  
+                } else {  
+                      
+                    document.getElementById('errorMessage').style.display = 'block';  
+                }  
+            })  // 错误
+            .catch(error => {  
+                console.error('There has been a problem with your fetch operation:', error);  
+                // 错误  
+                document.getElementById('errorMessage').innerText = 'An error occurred. Please try again later.';  
                 document.getElementById('errorMessage').style.display = 'block';  
-            }  
+            });  
+    
         });  
     </script>  
 </body>  
