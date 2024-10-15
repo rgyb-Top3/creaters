@@ -1,0 +1,20 @@
+package there.cumt.pojo;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class RateLimiterService {
+    private static final double REQUESTS_PER_SECOND = 1.0; // 每秒允许的请求
+    private static ConcurrentHashMap<String, RateLimiter> limiters = new ConcurrentHashMap<>();
+
+    public boolean isRequestAllowed(String key) {
+        RateLimiter limiter = limiters.computeIfAbsent(key, k -> RateLimiter.create(REQUESTS_PER_SECOND));
+        return limiter.tryAcquire(); // 尝试获取许可
+    }
+}
