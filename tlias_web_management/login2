@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .ht{
+        text-align: center;
+        color: cadetblue;
+        font-family: "幼圆";
+    }
+    .tab{
+        width:500px;
+        border: 5px solid cadetblue;
+        margin: 0px auto;
+        border-radius: 5px;
+        font-family: "幼圆";
+    }
+    .ltr td{
+        border: 1px solid powderblue;
+    }
+    .input{
+        border:0px;/* 移除边框 本来innertext是在text边框外但是把text的边框去掉了再加上整个单元格都被套上了边框所以看起来在一个格子里*/
+        /* 设置宽度为父元素的50% 由于父元素是表单所以其是表单百分之五十*/
+        width:50%;
+    }
+    .btn1{
+        border: 2px solid powderblue;
+        border-radius: 4px;
+        width: 60px;
+        background-color: antiquewhite;
+    }
+    #usernameMsg,#userpwdMsg,#qruserpwdMsg{
+        color:rgb(230,87,51);
+    }
+    .buttonContainer{
+        text-align: center;
+    }
+</style>
+<script>
+    function checkusername(){
+        var usernameReg=/^[a-zA-Z0-9]{5,10}$/
+        var usernameinput=document.getElementById("usernameinput")
+        var username=usernameinput.value
+        var usernameMsgspan=document.getElementById("usernameMsg")
+        if(!usernameReg.test(username)){
+            usernameMsgspan.innerText="账号格式错误"
+            return false
+        }
+        usernameMsgspan.innerText="ok"//innerText 是一个属性，不是方法，所以不应该带括号。下面是修正后的函数：
+        return true
+    }
+    function checkuserpwd(){
+        var userpwdReg=/^[0-9]{6}$/
+        var userpwdinput=document.getElementById("userpwdinput")
+        var userpwd=userpwdinput.value
+        var userpwdMsgspan=document.getElementById("userpwdMsg")
+        if(!userpwdReg.test(userpwd)){
+            userpwdMsgspan.innerText="密码格式错误"
+            return false
+        }
+        userpwdMsgspan.innerText="ok"
+        return true
+    }
+
+    function checkForm1(){
+        var flag1=checkusername();
+        var flag2=checkuserpwd();
+        return flag1&&flag2
+    }
+</script>
+<body>
+<form method=post action="/user/regist" onsubmit="return checkForm1()">
+    <h1 class="ht">欢迎使用学生管理系统</h1>
+    <h3 class="ht">请登录</h3>
+    <table class="tab">
+        <tr class="ltr">
+            <td>请输入账号</td>
+            <td>
+                <input class="input" id="usernameinput" type="text" onblur="checkusername()">
+                <span id="usernameMsg"></span>
+            </td>
+        </tr>
+        <tr class="ltr">
+            <td>请输入密码</td>
+            <td>
+                <input class="input" id="userpwdinput" type="password" onblur="checkuserpwd()">
+                <span id="userpwdMsg"></span>
+            </td>
+        </tr>
+        <tr class="ltr">
+            <td>确认密码</td>
+            <td>
+                <input class="input" id="qruserpwdinput" type="password" onblur="checkqruserpwd()">
+                <span id="qruserpwdMsg"></span>
+            </td>
+        </tr>
+        <tr class="ltr">
+            <td colspan="2" class="buttonContainer">
+                <input class="btn1" type="submit" value="登录">
+                <input class="btn1" type="reset" value="重置">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
