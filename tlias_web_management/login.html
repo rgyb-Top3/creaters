@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>Login Page</title>  
     <style>  
+     .loader {  
+    display: none;  
+    position: absolute;  
+    top: 50%;  
+    left: 50%;  
+    transform: translate(-50%, -50%);  
+}
+
         body {  
             font-family: Arial, sans-serif;  
             background-color: #f0f0f0;  
@@ -19,7 +27,8 @@
             padding: 20px;  
             border-radius: 8px;  
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);  
-            width: 300px;  
+            width: 300px;
+             position: relative; /* **新增:** 适配 loader 的绝对定位 */ 
         }  
         .login-container h2 {  
             margin-top: 0;  
@@ -58,7 +67,8 @@
         <form id="loginForm">  
             <input type="text" id="username" name="username" placeholder="Username" required>  
             <input type="password" id="password" name="password" placeholder="Password" required>  
-            <button type="submit">Login</button>  
+            <button type="submit">Login</button>
+            <div class="loader" id="loader">加载中...</div>  /* **新增:** 加载指示器的 div */**
             <p class="error-message" id="errorMessage">Invalid username or password.</p>  
         </form>  
     </div>  
@@ -74,7 +84,9 @@
   
             const loginData = { username, password };// 创建要发送的数据对象
             const jsonData = JSON.stringify(loginData);
-            
+
+            // 显示加载指示器**  
+            **document.getElementById('loader').style.display = 'block';
             fetch(apiUrl, {  
                 method: 'POST',  
                 headers: {  
@@ -82,6 +94,9 @@
                 },  
                 body: jsonData  
             })  
+
+                 .then(response => {  
+                **document.getElementById('loader').style.display = 'none'; // 隐藏加载指示器** 
             .then(response => {  
                 if (!response.ok) {  
                     throw new Error('Network response was not ok');  
